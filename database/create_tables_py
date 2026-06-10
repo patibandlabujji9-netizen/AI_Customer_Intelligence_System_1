@@ -1,0 +1,31 @@
+from database.db_connection import get_connection
+
+
+def create_tables():
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS users(
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            username TEXT UNIQUE,
+
+            password TEXT,
+
+            role TEXT
+        )
+        """
+    )
+
+    conn.commit()
+
+    conn.close()
+
+
+if __name__ == "__main__":
+    create_tables()

@@ -1,0 +1,35 @@
+/* Main App */
+.stApp {
+    background-color: #0E1117;
+    color: white;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #161B22;
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: #00BFFF;
+}
+
+/* Metric Cards */
+div[data-testid="metric-container"] {
+    background-color: #1F2937;
+    border: 1px solid #2D3748;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+/* Buttons */
+.stButton button {
+    background-color: #2563EB;
+    color: white;
+    border-radius: 8px;
+}
+
+/* Dataframe */
+[data-testid="stDataFrame"] {
+    border-radius: 10px;
+}

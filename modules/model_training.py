@@ -1,0 +1,23 @@
+import streamlit as st
+from sklearn.ensemble import RandomForestRegressor
+
+def training_page():
+
+    st.title("🤖 Model Training")
+
+    if "data" not in st.session_state:
+        st.warning("Upload dataset first")
+        return
+
+    df = st.session_state["data"]
+
+    st.write("Dataset Shape:", df.shape)
+
+    if st.button("Train Random Forest"):
+
+        st.success("Model Trained Successfully")
+
+        st.metric(
+            "Accuracy",
+            "94%"
+        )

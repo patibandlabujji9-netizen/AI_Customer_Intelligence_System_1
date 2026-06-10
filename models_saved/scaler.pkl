@@ -1,0 +1,44 @@
+import os
+import joblib
+
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+
+
+def train_random_forest(df):
+
+    os.makedirs("models_saved", exist_ok=True)
+
+    X = df[["Quantity", "Inventory"]]
+    y = df["Sales"]
+
+    scaler = StandardScaler()
+
+    X_scaled = scaler.fit_transform(X)
+
+    joblib.dump(
+        scaler,
+        "models_saved/scaler.pkl"
+    )
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X_scaled,
+        y,
+        test_size=0.2,
+        random_state=42
+    )
+
+    model = RandomForestRegressor(
+        n_estimators=200,
+        random_state=42
+    )
+
+    model.fit(X_train, y_train)
+
+    joblib.dump(
+        model,
+        "models_saved/random_forest.pkl"
+    )
+
+    return model

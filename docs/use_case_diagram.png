@@ -1,0 +1,18 @@
+          ┌─────────┐
+          │  Admin  │
+          └────┬────┘
+               │
+     ┌─────────┼──────────┐
+     │         │          │
+     ▼         ▼          ▼
+
+ Upload   Train Model   Generate Report
+
+     ▼
+ Data Analysis
+
+     ▼
+ Forecast Sales
+
+     ▼
+ Optimize Inventory
