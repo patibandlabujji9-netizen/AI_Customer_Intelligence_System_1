@@ -8,6 +8,12 @@ Traditional forecasting methods often struggle to adapt to dynamic market condit
 
 ---
 
+## Upload Dataset Page
+
+![Upload Dataset Page](docs/upload_dataset_screenshot.png)
+
+---
+
 ## Problem Statement
 
 Inaccurate sales forecasts lead to significant inventory management challenges, including:
