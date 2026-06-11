@@ -22,4 +22,4 @@ def region_analysis_page():
         values="Sales"
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")

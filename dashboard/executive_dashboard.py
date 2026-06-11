@@ -1,52 +1,55 @@
 import streamlit as st
-import plotly.express as px
 import pandas as pd
+import plotly.express as px
+from utils.data_loader import load_sales_data, normalize_sales_data
 
+def show_executive_dashboard():
 
-def executive_dashboard():
+    st.title("Executive Dashboard")
 
-    st.header("📊 Executive Dashboard")
-
-    if "data" not in st.session_state:
-        st.warning("Upload dataset first")
+    try:
+        df = st.session_state["data"] if "data" in st.session_state else load_sales_data()
+        df = normalize_sales_data(df)
+    except (FileNotFoundError, KeyError) as exc:
+        st.error(str(exc))
         return
 
-    df = st.session_state["data"]
-
     total_sales = df["Sales"].sum()
+    total_profit = df["Profit"].sum() if "Profit" in df.columns else 0
     total_orders = len(df)
 
-    profit = (
-        df["Profit"].sum()
-        if "Profit" in df.columns
-        else 0
+    c1, c2, c3 = st.columns(3)
+
+    c1.metric("Total Sales", f"${total_sales:,.0f}")
+    c2.metric("Total Profit", f"${total_profit:,.0f}")
+    c3.metric("Orders", total_orders)
+
+    monthly = df.groupby("Month")["Sales"].sum().reset_index()
+
+    fig = px.line(
+        monthly,
+        x="Month",
+        y="Sales",
+        title="Monthly Revenue Trend"
     )
 
-    avg_sales = df["Sales"].mean()
+    st.plotly_chart(fig, width="stretch")
 
-    c1,c2,c3,c4 = st.columns(4)
-
-    c1.metric("Total Sales", f"₹{total_sales:,.0f}")
-    c2.metric("Orders", total_orders)
-    c3.metric("Profit", f"₹{profit:,.0f}")
-    c4.metric("Average Sales", f"₹{avg_sales:,.0f}")
-
-    if "Date" in df.columns:
-
-        df["Date"] = pd.to_datetime(df["Date"])
-
-        trend = df.groupby(
-            df["Date"].dt.to_period("M")
-        )["Sales"].sum().reset_index()
-
-        trend["Date"] = trend["Date"].astype(str)
-
-        fig = px.line(
-            trend,
-            x="Date",
-            y="Sales",
-            markers=True,
-            title="Monthly Sales Trend"
+    if "Region" in df.columns:
+        region_sales = (
+            df.groupby("Region")["Sales"]
+            .sum()
+            .reset_index()
         )
 
-        st.plotly_chart(fig, use_container_width=True)
+        pie_fig = px.pie(
+            region_sales,
+            names="Region",
+            values="Sales",
+            title="Sales Share by Region"
+        )
+
+        st.plotly_chart(pie_fig, width="stretch")
+
+    st.subheader("Recent Transactions")
+    st.dataframe(df.tail(20))

@@ -26,7 +26,7 @@ def eda_page():
         title=f"{selected} Distribution"
     )
 
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1, width="stretch")
 
     fig2 = px.box(
         df,
@@ -34,4 +34,4 @@ def eda_page():
         title=f"{selected} Outliers"
     )
 
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2, width="stretch")

@@ -1,5 +1,6 @@
 import streamlit as st
 import plotly.express as px
+from utils.data_loader import normalize_sales_data
 
 
 def region_dashboard():
@@ -10,7 +11,15 @@ def region_dashboard():
         st.warning("Upload data first")
         return
 
-    df = st.session_state["data"]
+    try:
+        df = normalize_sales_data(st.session_state["data"])
+    except KeyError as exc:
+        st.error(str(exc))
+        return
+
+    if "Region" not in df.columns:
+        st.warning("Region column not found")
+        return
 
     region_sales = (
         df.groupby("Region")["Sales"]
@@ -27,5 +36,17 @@ def region_dashboard():
 
     st.plotly_chart(
         fig,
-        use_container_width=True
+        width="stretch"
+    )
+
+    pie_fig = px.pie(
+        region_sales,
+        names="Region",
+        values="Sales",
+        title="Region Sales Share"
+    )
+
+    st.plotly_chart(
+        pie_fig,
+        width="stretch"
     )

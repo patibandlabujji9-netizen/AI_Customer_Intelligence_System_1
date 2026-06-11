@@ -23,4 +23,4 @@ def sales_analysis_page():
         y="Sales"
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
