@@ -14,21 +14,6 @@ st.markdown("### Smart Analytics • Churn Prediction • Segmentation • Recom
 
 st.markdown("---")
 
-# -------------------------
-# SIDEBAR NAVIGATION INFO
-# -------------------------
-st.sidebar.title("📌 Navigation")
-st.sidebar.info(
-    """
-    Use the pages below:
-
-    📊 Dashboard  
-    📉 Churn Prediction  
-    👥 Segmentation  
-    🎯 Recommendations  
-    🔮 Prediction Tool
-    """
-)
 
 # -------------------------
 # HOME DASHBOARD UI
